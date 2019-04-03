@@ -1,0 +1,23 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "module": "commonjs",
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es6",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./"
+  },
+  "include": [
+    "**/*.ts",
+    "!**/*.d.ts",
+    "!**/*.mock.ts"
+  ],
+  "exclude": [
+    "node_modules", 
+    "./dist/**/*",
+    "./test/**/*"
+  ]
+}
