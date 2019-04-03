@@ -6,11 +6,17 @@ export const roundToInt = (num: number): Int => Math.round(num) as Int;
 
 export class Calculator {
 
-    public add(numbers: string= ""): Int {
-        if (!numbers) {
+    public add(parameter: string= ""): Int {
+        let delimiter = ",";
+        if (!parameter) {
             return 0 as Int;
         }
-        const stack = numbers.split(",").filter( (v) => {
+        let numbers = parameter;
+        if (parameter.indexOf("//") === 0) {
+            delimiter = parameter.substr(2, parameter.indexOf("\n") - 2);
+            numbers = parameter.substring(parameter.indexOf("\n"));
+        }
+        const stack = numbers.split(delimiter).filter( (v) => {
             return v !== "";
          }).map( (v) => roundToInt(Number(v.trim())) );
 
