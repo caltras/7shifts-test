@@ -4,8 +4,6 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
-    "pretest": "npm run lint",
     "test": "jest",
     "build": "tsc -p tsconfig.json",
     "start": "npm run-script build && node dist/index.js"

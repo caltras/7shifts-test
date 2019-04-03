@@ -5,23 +5,43 @@ export type Int = number & { __int__: void };
 export const roundToInt = (num: number): Int => Math.round(num) as Int;
 
 export class Calculator {
-
+    private changeDelimiter (numbers, d) {
+        const delimiterToChange = "[##D##]";
+        let start = numbers.indexOf(d);
+        if (start === -1) {
+            return numbers;
+        }else{
+            numbers = numbers.substring(0,start) + delimiterToChange +numbers.substring(start+d.length);
+            return this.changeDelimiter(numbers,d);
+        }
+    }
     public add(parameter: string= ""): Int {
-        let delimiter = ",";
+        let delimiter = [","];
         if (!parameter) {
             return 0 as Int;
         }
         let numbers = parameter;
         if (parameter.indexOf("//") === 0) {
-            delimiter = parameter.substr(2, parameter.indexOf("\n") - 2);
+            const paramDelimiter = parameter.substr(2, parameter.indexOf("\n") - 2);
+            if (paramDelimiter !==","){
+                delimiter = paramDelimiter.split(",");
+            }
             numbers = parameter.substring(parameter.indexOf("\n"));
         }
         const negativesNumbers = [];
-        const stack = numbers.split(delimiter).filter( (v) => {
+        const delimiterToChange = "[##D##]";
+        delimiter.forEach( (d) => {
+            numbers = this.changeDelimiter(numbers, d);
+        });
+        
+        const stack = numbers.split(delimiterToChange).filter( (v) => {
             return v !== "";
          })
          .filter( (v) => {
              if ( Number(v) > 0 ) {
+                if (Number(v) > 1000) {
+                    return false;
+                }
                 return true;
              } else {
                 negativesNumbers.push(v);

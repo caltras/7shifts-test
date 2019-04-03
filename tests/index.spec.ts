@@ -64,4 +64,37 @@ describe('7Shifts Test', ()=>{
             }
         });
     });
+    describe('Bonus', ()=>{
+        it('Add "-1,2,3,2000" expected Exception', ()=>{
+            try{
+                calc.add("-1,2,3");
+                fail();
+            }catch(e){
+                expect(e.message).toBe('Negatives not allowed: -1');
+            }
+        });
+        describe("Bonus 1", () =>{
+            it('Add "1,2,3,5,1001" expected 11: Ignoring number larger than 1000', ()=>{
+                expect(calc.add("1,2,3,5,1001")).toBe(11 as Int);
+            });
+            it('Add "1,2,3,5,1000" expected 1011: Ignoring number larger than 1000', ()=>{
+                expect(calc.add("1,2,3,5,1000")).toBe(1011 as Int);
+            });
+        });
+        describe("Bonus 2", ()=>{
+            it('Add "//***\\n1***2***3": Arbitrary length to Delimiter', ()=>{
+                expect(calc.add("//***\n1***2***3")).toBe(6 as Int);
+            });
+        });
+        describe("Bonus 3", ()=>{
+            it('Add "//$,@\n1$2@3": Multiples delimiters', ()=>{
+                expect(calc.add("//$,@\n1$2@3")).toBe(6 as Int);
+            });
+        });
+        describe("Bonus 4", ()=>{
+            it('Add "//***,$,@\\n1***2***3$5$6@7": Combine Bonus 2 and Bonus 3', ()=>{
+                expect(calc.add("//***,$,@\n1***2***3$5$6@7***6")).toBe(30 as Int);
+            });
+        });
+    });
 })
