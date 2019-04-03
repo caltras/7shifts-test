@@ -47,4 +47,21 @@ describe('7Shifts Test', ()=>{
             expect(calc.add("////\n2//3//8")).toBe(13 as Int);
         });
     });
+    describe('Part 4 - Negatives not allowed', ()=>{
+        it('Add "-1,2,3" expected Exception', ()=>{
+            try{
+                calc.add("-1,2,3");
+                fail();
+            }catch(e){
+                expect(e.message).toBe('Negatives not allowed: -1');
+            }
+        });
+        it('Add "-1,2,-4,-5" expected Exception', ()=>{
+            try{
+                calc.add("-1,2,-4,-5");
+            }catch(e){
+                expect(e.message).toBe('Negatives not allowed: -1,-4,-5');
+            }
+        });
+    });
 })

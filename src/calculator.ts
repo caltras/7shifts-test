@@ -16,13 +16,26 @@ export class Calculator {
             delimiter = parameter.substr(2, parameter.indexOf("\n") - 2);
             numbers = parameter.substring(parameter.indexOf("\n"));
         }
+        const negativesNumbers = [];
         const stack = numbers.split(delimiter).filter( (v) => {
             return v !== "";
-         }).map( (v) => roundToInt(Number(v.trim())) );
-
-        const result = stack.reduce( (previous: Int, currentValue: Int) => {
-            return roundToInt(previous + currentValue);
-        } );
+         })
+         .filter( (v) => {
+             if ( Number(v) > 0 ) {
+                return true;
+             } else {
+                negativesNumbers.push(v);
+                return false;
+             }
+         });
+        if (negativesNumbers.length > 0) {
+            throw new Error("Negatives not allowed: " + negativesNumbers.join(","));
+        }
+        const result = stack
+            .map( (v) => roundToInt(Number(v.trim())) )
+            .reduce( (previous: Int, currentValue: Int) => {
+                return roundToInt(previous + currentValue);
+            } );
 
         return result;
 
